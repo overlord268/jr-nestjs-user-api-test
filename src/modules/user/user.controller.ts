@@ -84,16 +84,6 @@ export class UserController {
   async seedData(): Promise<boolean> {
     let results = true;
      await this.userService.seedData()
-
-  
-
-    /**
-     
-    
-     * @todo
-     * Loop through all the users and save into the database
-     */
-
     return results;
   }
 }
