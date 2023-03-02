@@ -1,13 +1,11 @@
 import { ApiProperty, PickType } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString } from 'class-validator';
 import { User } from '../schemas/user.schema';
 
-export class CreateUserDto extends PickType(User, [
+export class SearchUserDTO extends PickType(User, [
   'firstName',
   'lastName',
-  'password',
   'username',
-  'email',
 ]) {
   @ApiProperty()
   @IsString()
@@ -19,23 +17,13 @@ export class CreateUserDto extends PickType(User, [
   @IsNotEmpty()
   lastName: string;
 
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  password: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
   username: string;
 
-  @ApiProperty()
-  @IsEmail()
-  @IsNotEmpty()
-  email: string;
-
-
-  constructor(args?: Partial<CreateUserDto>) {
+  constructor(args?: Partial<SearchUserDTO>) {
     super();
     Object.assign(this, args);
   }

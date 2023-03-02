@@ -10,8 +10,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CsvParser } from 'src/providers/csv-parser.provider';
 import { CreateUserDto } from './dto/create-user.dto';
+import { SearchUserDTO } from './dto/search-users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserService } from './user.service';
@@ -71,14 +71,25 @@ export class UserController {
     return user;
   }
 
+  @Post('/search')
+  @ApiOperation({ summary: 'Looksup an user inside records' })
+  @ApiOkResponse({ type: UserDto })
+  async search(@Body() body: SearchUserDTO): Promise<UserDto> {
+    return await this.userService.searchByFields(body);
+  }
+
+
   @Post('/seed-data')
   @ApiOperation({ summary: 'Load data from ./seed-data/users.csv into our mongo database' })
   async seedData(): Promise<boolean> {
-    const users = await CsvParser.parse('seed-data/users.csv');
-    let results = false;
+    let results = true;
+     await this.userService.seedData()
+
+  
 
     /**
-     *
+     
+    
      * @todo
      * Loop through all the users and save into the database
      */
